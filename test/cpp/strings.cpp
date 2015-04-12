@@ -9,20 +9,20 @@
 #include <nan.h>
 
 NAN_METHOD(ReturnAsciiString) {
-  NanReturnValue(NanNew(*NanAsciiString(args[0])));
+  NanReturnValue(NanNew(*NanAsciiString(args[0])).ToLocalChecked());
 }
 
 NAN_METHOD(ReturnUtf8String) {
-  NanReturnValue(NanNew(*NanUtf8String(args[0])));
+  NanReturnValue(NanNew(*NanUtf8String(args[0])).ToLocalChecked());
 }
 
 NAN_METHOD(ReturnUcs2String) {
-  NanReturnValue(NanNew(*NanUcs2String(args[0])));
+  NanReturnValue(NanNew(*NanUcs2String(args[0])).ToLocalChecked());
 }
 
 NAN_METHOD(HeapString) {
   NanUcs2String *s = new NanUcs2String(args[0]);
-  v8::Local<v8::String> res = NanNew(**s);
+  v8::Local<v8::String> res = NanNew(**s).ToLocalChecked();
   delete s;
   NanReturnValue(res);
 }
@@ -51,8 +51,8 @@ void Init (v8::Handle<v8::Object> target) {
   , returnAsciiString
   );
 
-  target->Set(
-      NanNew("returnAsciiString")
+  NanSet(target
+    , NanNew("returnAsciiString").ToLocalChecked()
     , returnAsciiString->GetFunction()
   );
 
@@ -64,8 +64,8 @@ void Init (v8::Handle<v8::Object> target) {
   , returnUtf8String
   );
 
-  target->Set(
-      NanNew("returnUtf8String")
+  NanSet(target
+    , NanNew("returnUtf8String").ToLocalChecked()
     , returnUtf8String->GetFunction()
   );
 
@@ -77,8 +77,8 @@ void Init (v8::Handle<v8::Object> target) {
   , returnUcs2String
   );
 
-  target->Set(
-      NanNew("returnUcs2String")
+  NanSet(target
+    , NanNew("returnUcs2String").ToLocalChecked()
     , returnUcs2String->GetFunction()
   );
 
@@ -90,8 +90,8 @@ void Init (v8::Handle<v8::Object> target) {
   , heapString
   );
 
-  target->Set(
-      NanNew("heapString")
+  NanSet(target
+    , NanNew("heapString").ToLocalChecked()
     , heapString->GetFunction()
   );
 
@@ -103,8 +103,8 @@ void Init (v8::Handle<v8::Object> target) {
   , encodeHex
   );
 
-  target->Set(
-      NanNew("encodeHex")
+  NanSet(target
+    , NanNew("encodeHex").ToLocalChecked()
     , encodeHex->GetFunction()
   );
 
@@ -116,8 +116,8 @@ void Init (v8::Handle<v8::Object> target) {
   , encodeUCS2
   );
 
-  target->Set(
-      NanNew("encodeUCS2")
+  NanSet(target
+    , NanNew("encodeUCS2").ToLocalChecked()
     , encodeUCS2->GetFunction()
   );
 }
